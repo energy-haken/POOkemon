@@ -192,11 +192,6 @@ La structure du dépôt git doit être la suivante :
     ├──...
 ```
 
-## Planning indicatif
-- rendu 1 : affichage permettant seulement d'afficher le plateau des Pokémons (terrain et main)
-- rendu 2 : le jeu est jouable : les Pokémons peuvent s'attaquer, il est possible de piocher des Pokémons et de les placer sur le terrain.
-
-
 ## Quelques consignes
 
 Veillez :
