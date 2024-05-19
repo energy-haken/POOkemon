@@ -1,13 +1,17 @@
 package Jeu.Partie.Joueurs;
 
-import Jeu.Partie.Defausse;
+import Jeu.Partie.NomPokemon;
+import Jeu.Partie.Terrain;
 
 import java.util.Random;
 
 public class Joueur {
+
     private Pioche m_piochePrivee = new Pioche();
     private Main m_mainPrivee = new Main();
-    private Defausse m_defaussePrivee = new Defausse();
+    private Terrain m_terrainPrivee = new Terrain(this);
+
+
 
     public Pioche getPiocheJoueur() {
         return m_piochePrivee;
@@ -20,13 +24,20 @@ public class Joueur {
      */
     public void ajoutMain() {
         Random r = new Random();
-        int randomPokemon = r.nextInt(m_piochePrivee.getNombrePokemonDansLaPioche());
-        m_mainPrivee.ajouterDansMain(m_piochePrivee.getPokemonDansLaPioche(randomPokemon));
-        m_piochePrivee.removePokemonDansLaPioche(randomPokemon);
+        if(m_piochePrivee.getNombrePokemonDansLaPioche() != 0){
+            int randomPokemon = r.nextInt(m_piochePrivee.getNombrePokemonDansLaPioche());
+            m_mainPrivee.ajouterDansMain(m_piochePrivee.getPokemonDansLaPioche(randomPokemon));
+            m_piochePrivee.removePokemonDansLaPioche(randomPokemon);
+        }
+
 
     }
 
-    public Main getMainPrivee() {
+    public Main getMain() {
         return m_mainPrivee;
+    }
+
+    public Terrain getTerrain() {
+        return m_terrainPrivee;
     }
 }

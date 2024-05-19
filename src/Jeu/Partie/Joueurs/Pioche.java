@@ -1,12 +1,14 @@
 package Jeu.Partie.Joueurs;
 
+import Jeu.Partie.NomPokemon;
 import Jeu.Pokemon;
 
 import java.util.ArrayList;
 
 public class Pioche {
-    private ArrayList<Pokemon> m_pokemonDansLaPioche = new ArrayList<Pokemon>();
+    private ArrayList<Pokemon> m_pokemonDansLaPioche = new ArrayList<>();
     private int m_nombrePokemonDansLaPioche ;
+    private NomPokemon m_nomPokemonQuiReste = new NomPokemon();
 
     public Pioche() {
         genererPioche() ;
@@ -15,7 +17,7 @@ public class Pioche {
 
     public void genererPioche() {
         for (int i = 0; i < 21; i++){
-            m_pokemonDansLaPioche.add(new Pokemon());
+            m_pokemonDansLaPioche.add(new Pokemon(m_nomPokemonQuiReste));
 
         }
 

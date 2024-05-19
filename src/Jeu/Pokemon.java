@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random ;
 import Jeu.Element.*;
+import Jeu.Partie.NomPokemon;
 
 public class Pokemon {
 
@@ -14,20 +15,23 @@ public class Pokemon {
     private String m_nom;
     private int m_pointDeVie;
     private int m_attaque;
-    private List<String> m_listeNomPokemon = new ArrayList<>(Arrays.asList("Bulbizarre", "Herbizarre", "Florizarre", "Salamèche", "Reptincel", "Dracaufeu", "Carapuce", "Carabaffe", "Tortank", "Chenipan", "Chrysacier", "Papilusion", "Aspicot", "Coconfort", "Dardargnan", "Roucool", "Roucoups", "Roucarnage", "Rattata", "Rattatac", "Piafabec", "Rapasdepic", "Abo", "Arbok", "Pikachu", "Raichu", "Sabelette", "Sablaireau", "Nidoran", "Nidorina", "Nidoqueen", "Nidorino", "Nidoking", "Mélofée", "Mélodelfe", "Goupix", "Feunard", "Rondoudou", "Grodoudou", "Nosferapti", "Nosferalto", "Mystherbe", "Ortide", "Rafflesia", "Paras", "Parasect", "Mimitoss", "Aéromite", "Taupiqueur", "Triopikeur", "Miaouss", "Persian", "Psykokwak", "Akwakwak", "Férosinge", "Colossinge", "Caninos", "Arcanin", "Ptitard", "Têtarte", "Tartard", "Abra", "Kadabra", "Alakazam", "Machoc", "Machopeur", "Mackogneur", "Chétiflor", "Boustiflor", "Empiflor", "Tentacool", "Tentacruel", "Racaillou", "Gravalanch", "Grolem", "Ponyta", "Galopa", "Ramoloss", "Flagadoss", "Magnéti", "Magnéton", "Canarticho", "Doduo", "Dodrio", "Otaria", "Lamantine", "Tadmorv", "Grotadmorv", "Kokiyas", "Crustabri", "Fantominus", "Spectrum", "Ectoplasma", "Onix", "Soporifik", "Hypnomade", "Krabby", "Krabboss", "Voltorbe", "Electrode", "Noeunoeuf", "Noadkoko", "Osselait", "Ossatueur", "Kicklee", "Tygnon", "Excelangue", "Smogo", "Smogogo", "Rhinocorne", "Rhinoféros", "Leveinard", "Saquedeneu", "Kangourex", "Hypotrempe", "Hypocéan", "Poissirène", "Poissoroy", "Stari", "Staross", "M. Mime", "Insécateur", "Lippoutou", "Elektek", "Magmar", "Scarabrute", "Tauros", "Magicarpe", "Léviator", "Lokhlass", "Métamorph", "Evoli", "Aquali", "Voltali", "Pyroli", "Porygon", "Amonita", "Amonistar", "Kabuto", "Kabutops", "Ptéra", "Ronflex", "Artikodin", "Electhor", "Sulfura", "Minidraco", "Draco", "Dracoloss", "Mewtwo", "Mew"));
+    private NomPokemon m_nomPokeQuiReste;
 
     // Initialisations des différents aleatoires
     Random r = new Random();
     int randomType =  r.nextInt(1, 5);
-    int randomNom = r.nextInt(m_listeNomPokemon.size());
+
 
 
     /**
      * Constructueur : Tout les valeur sont aléatoire
      */
 
-    public Pokemon(){
+    public Pokemon(NomPokemon nomPokemon){
+        m_nomPokeQuiReste = nomPokemon;
         choixType(randomType);
+
+        int randomNom = r.nextInt(m_nomPokeQuiReste.getNombrePokemons());
         choixNom(randomNom);
 
         m_pointDeVie = ( r.nextInt(10,21)) * 10 ;
@@ -64,8 +68,8 @@ public class Pokemon {
      * @param randomNumber
      */
     void choixNom(int randomNumber){
-        m_nom = m_listeNomPokemon.get(randomNumber);
-        m_listeNomPokemon.remove(randomNumber);
+        m_nom = m_nomPokeQuiReste.choixNomPokemon(randomNumber);
+
     }
 
 
@@ -118,7 +122,30 @@ public class Pokemon {
      */
 
     public void attaque(Pokemon pokemon){
-        pokemon.m_pointDeVie -= this.m_attaque ;
+
+        Musique.playMusic("src/Jeu/Sons/AttackSound.wav");
+        String typeAdvers = pokemon.getType().getNom() ;
+        System.out.println(this.m_nom + " attaque " +  pokemon.getNom() + " !");
+        if(this.m_type.getAvantage() == typeAdvers){
+            System.out.println("Attaque Super Efficace !");
+          //  Musique.playMusic("src/Jeu/Critical Damage.WAV");
+            pokemon.m_pointDeVie -= this.m_attaque + 10 ;
+
+        }
+        if(this.m_type.getFaiblesse() == typeAdvers){
+            System.out.println("mais " + pokemon.getNom() + " n'a pas peur de l'attaque !");
+    //        Musique.playMusic("src/Jeu/youSuck.WAV");
+            pokemon.m_pointDeVie -= this.m_attaque - 10 ;
+
+        }
+        else {
+            pokemon.m_pointDeVie -= this.m_attaque;
+
+        }
+        System.out.println() ;
+        if(pokemon.m_pointDeVie < 0 ){
+            pokemon.m_pointDeVie = 0;
+        }
     }
 
     /**
@@ -142,8 +169,8 @@ public class Pokemon {
      *
      * @return Le type du Pokemon
      */
-    public String getType(){
-        return m_type.getNom() ;
+    public Affinite getType(){
+        return m_type;
     }
 
     /**
@@ -160,6 +187,10 @@ public class Pokemon {
      */
     public int getAttaque(){
         return m_attaque;
+    }
+
+    public void Tuer(Pokemon pokemon){
+        pokemon.m_pointDeVie = 0 ;
     }
 
 }

@@ -6,6 +6,7 @@ public abstract class Affinite  {
     protected String m_avantage ;
     protected String m_faiblesse ;
 
+
     public Affinite(String nom)
     {
         m_nom = nom;
