@@ -1,0 +1,239 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam style strictuml
+hide empty members
+
+
+class JeuPP{
+    + {static} main(args[] : String)
+}
+
+package Jeu
+{
+    class JeuPokemon
+    {
+        + lancerJeu()
+        + afficheJeu(tour : Tour ,adversaire: Adversaire, utilisateur: Utilisateur)
+        + afficheTourJoueur(tour : Tour, utilisateur : Utilisateur)
+        + afficheTourAdversaire(tour : Tour , adversaire : Adversaire)
+        + verifTourUtilisateur(tour : Tour, utilisateur : Utilisateur)
+        + verifTourAdversaire(tour : Tour , adversaire : Adversaire)
+        + initTerrain(Utilisateur : utilisateur)
+
+    }
+    class Pokemon
+    {
+        - m_type : Affinite
+        - m_nom : NomPokemon
+        - m_pointDeVie : Integer
+        - m_attaque : Integer
+        - m_nomPokeQuiReste : NomPokemon
+
+        + <<create>> Pokemon(nomPokemon : NomPokemon)
+        + choixType(randomNumber : Integer)
+        + choixNom(randomNumber : Integer)
+        + attaque(pokemon : Pokemon)
+        + getNom() : String
+        + getType() : Affinite
+        + getPointDeVie() : Integer
+        + getAttaque() : Integer
+        + getCartePoke() : String
+        + toString() : String
+
+    }
+    class Musique{
+        +  {static} playMusic(filepath : String)
+    }
+
+    package Element
+    {
+        abstract class Affinite <<abstract>>
+        {
+            # m_nom : String
+            # m_avantage : String
+            # m_faiblesse : String
+
+            + getAvantage() : String
+            + getFaiblesse() : String
+            + getNom() : String
+        }
+        class Air extends Affinite
+        {
+            + <<Create>> Air()
+            + getAvantage() : String
+            + getFaiblesse() : String
+            + getNom() : String
+        }
+        class Eau extends Affinite
+        {
+            + <<Create>> Eau()
+            + getAvantage() : String
+            + getFaiblesse() : String
+            + getNom() : String
+        }
+        class Feu extends Affinite
+        {
+            + <<Create>> Feu()
+            + getAvantage() : String
+            + getFaiblesse() : String
+            + getNom() : String
+        }
+        class Terre extends Affinite
+        {
+            + <<Create>> Terre()
+            + getAvantage() : String
+            + getFaiblesse() : String
+            + getNom() : String
+        }
+    }
+
+    package Partie
+    {
+        class Defausse
+        {
+            - m_pokemonDansLaDefausse : String[*]
+            - m_nombrePokemonDansDefausse : Integer
+
+            + <<create>> Defausse() ;
+            + ajoutPokemonDefausse(pokemon : Pokemon)
+            + getNombrePokemonDansDefausse() : Integer
+            + afficheDefausse() : String
+        }
+        class GameOver{
+            + <<Create>> GameOver()
+            + printGameOver() : String
+        }
+        class NomPokemon{
+            - m_listeNomPokemon : String[*]
+            + choixNomPokemon(i : Integer) : String
+            + getNombrePokemons() : Integer
+        }
+        class Terrain
+        {
+            - m_pokemonSurLeTerrain : String[*]
+            - m_defausseJoueur : Defausse
+            - m_aDejaAttaquer : String[*}
+            - m_joueurAssocier : Joueur
+
+            + <<Create>> Terrain(joueur : Joueur)
+            + ajoutPokemonSurTerrain(pokemon : Pokemon)
+            + afficheTerrain()
+            + removePokemonSurTerrain(i : Integer)
+            + checkDeath(adversaire : Adversaire)
+            + checkDeath(utilisateur : Utilisateur)
+            + getPokemonSurTerrain(i : Integer) : Pokemon
+            + getDefausseJoueur() : Defausse
+            + getNombrePokemonSurTerrain() : Integer
+            + ajouterPokemonDejaAttaquer(pokemon : Pokemon)
+            + viderPokemonQuiAJouer()
+            + getNombrePokemonDejaAttaquer() : Integer
+            + getPokemonDejaAttaquer(i : Integer)
+        }
+        class Tour
+        {
+            - m_tourDuJoueur : Joueur
+            - m_nombreDeTour : Integer
+            - m_joueurDansLaPartie : String[*]
+            - m_indexTourDuJoueur : Integer
+
+            + <<create>> Tour(joueur1 : Joueur , joueur2 : Joueur)
+            + tourSuivant()
+            + getNombreDeTour() : Integer
+            + getTourDuJoueur() : Joueur
+        }
+        class Victoire{
+            + <<Create>> Victoire()
+            + printVictoire() : String
+        }
+
+        package Joueurs
+        {
+            class Joueur
+            {
+
+                - m_piochePrive : Pioche
+                - m_mainPrive : Main
+                - m_terrainPrive : Terrain
+
+                + getPiocheJoueur() : Pioche
+                + ajoutMain()
+                + getMain() : Main
+                + getTerrain() : Terrain
+            }
+            class Adversaire extends Joueur
+            {
+                - m_ordreAttaque : Pokemon
+
+                + choixOrdrePokemon(pokemon : Pokemon)
+            }
+            class Utilisateur extends Joueur
+            {
+                + inputUserChoixQuiAttaque(terrain : Terrain) : Pokemon
+                + inputUserChoixQuiSeFaitAttaquer(terrain : Terrain) : Pokemon
+                + imputPoserPokemon()
+                + checkAttackValide(i : Integer, terrain : Terrain)
+            }
+            class Main
+            {
+                - m_pokemonDansLaMain : String[*]
+                - m_nombrePokemonDansLaMain : Integer
+
+                + ajouterDansMain(p : Pokemon)
+                + getPokemonDansLaMain(i : Integer) : Pokemon
+                + retirerPokemonDansLaMain(i : Integer)
+                + ajoutPokemonSurleTerrain(terrain : Terrain)
+                + afficheMain()
+                + getNombrePokemonDansLaMain() : Integer
+            }
+            class Pioche
+            {
+                - m_pokemonDansLaPioche : String[*]
+                - m_nombrePokemonDansLaPioche : Integer
+                - m_nomPokemonQuiReste : NomPokemon
+
+                + <<Create>> Pioche()
+                + genererPioche()
+                + afficherPioche()
+                + getNombrePokemonDansLaPioche() : Integer
+                + getPokemonDansLaPioche(i : Integer) : Pokemon
+                + removePokemonDansLaPioche(i : Integer)
+            }
+
+        }
+    }
+
+    JeuPP -> JeuPokemon
+
+    JeuPokemon .-down-> Adversaire : <<Instantiate>>
+    JeuPokemon .-down-> Utilisateur : <<Instantiate>>
+    JeuPokemon .> Tour : <<Instantiate>>
+    JeuPokemon .> Musique : <<use>>
+
+
+    Joueur *--> "1 \n m_terrainPrive" Terrain : belongs to >
+    Joueur *-> "1 \n m_piochePrive" Pioche : belongs to >
+    Joueur *-> "1 \n m_mainPrive" Main : belongs to >
+
+    Terrain *--> "1 \n m_defausseJoueur" Defausse : belongs to >
+    Terrain o-up-> Joueur : <<use>>
+    Terrain .-> Pokemon : <<use>>
+    Terrain *-> GameOver : <<Instantiate>>
+    Terrain *-> Victoire : <<Instantiate>>
+
+    Defausse .-> Pokemon : <<use>>
+
+    Tour o-down-> "1.. \n m_tourDuJoueur" Joueur : is part of >
+
+    Pioche *-> "20/21 \n m_pokemonDansLaPioche"Pokemon : belongs to >
+    Pioche *--> "1.. \n m_listeNomPokemon"NomPokemon : belongs to >
+
+    Main .> Pokemon : <<use>>
+    Main .> Terrain : <<Call>>
+
+    Pokemon *--> Affinite
+    Pokemon o-> "* \n m_nomPokeQuiReste"NomPokemon :  is part of >
+
+}
+
+@enduml
