@@ -13,7 +13,7 @@ public class ListePouvoirs {
         AffiniteEther ether = new AffiniteEther();
         AffinitePlomb plomb = new AffinitePlomb();
         Berserk berserk = new Berserk();
-      //  ExtensionTerritoire territoire = new ExtensionTerritoire();
+
       //  Fear fear = new Fear();
       //  FerveurGuerriere ferveurGuerriere = new FerveurGuerriere();
       //  Kamikaze kamikaze = new Kamikaze();
@@ -27,7 +27,7 @@ public class ListePouvoirs {
 
 
         m_listePouvoir.add(berserk);
-    //    m_listePouvoir.add(territoire);
+
     //    m_listePouvoir.add(fear);
     //    m_listePouvoir.add(ferveurGuerriere);
     //    m_listePouvoir.add(kamikaze);

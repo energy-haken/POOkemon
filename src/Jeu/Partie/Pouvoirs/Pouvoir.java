@@ -23,16 +23,14 @@ public abstract class Pouvoir {
 
 
 
-    public void utiliserLePouvoir(Joueur joueur){
-        m_dejaUtiliser  = true ;
-    }
+
 
     public void utiliserLePouvoir(Pokemon pokemon){
         m_dejaUtiliser  = true ;
     }
 
-    public void utiliserLePouvoir(Terrain terrain){
-        m_dejaUtiliser = true ;
+    public void regenerPouvoir(Pokemon pokemon){
+        m_dejaUtiliser  = false ;
     }
 
     public String getDescription(){
@@ -49,6 +47,10 @@ public abstract class Pouvoir {
 
     public Boolean getDejaDistribuer(){
         return m_dejaDistribuer;
+    }
+
+    public boolean getReutisable(){
+        return m_reutisable;
     }
 
     public void distribuer(){

@@ -2,6 +2,7 @@ package Jeu.Partie;
 
 
 import Jeu.Partie.Joueurs.*;
+import Jeu.Partie.Pouvoirs.Pouvoir;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -32,6 +33,16 @@ public class Tour {
     public void tourSuivant(){
         m_nombreDeTour += 1 ;
         m_tourDuJoueur.getTerrain().viderPokemonQuiAJouer();
+        for(int i = 0 ; i < m_tourDuJoueur.getTerrain().getNombrePokemonSurTerrain() ; i++){
+            Pouvoir pouvoirDuPoke = m_tourDuJoueur.getTerrain().getPokemonSurTerrain(i).getPouvoir();
+
+            if(pouvoirDuPoke != null){
+                if(pouvoirDuPoke.getReutisable()){
+                    pouvoirDuPoke.regenerPouvoir(m_tourDuJoueur.getTerrain().getPokemonSurTerrain(i));
+                }
+            }
+        }
+
 
         while(m_tourDuJoueur != m_joueurDansLaPartie.get(m_indexTourDuJoueur)){
             m_indexTourDuJoueur += 1 ;
