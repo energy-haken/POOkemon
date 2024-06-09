@@ -16,7 +16,7 @@ public class Terrain {
     protected Defausse m_defausseJoueur = new Defausse();
     protected Joueur m_joueurAssocier ;
     protected ArrayList<Pokemon> m_aDejaAttaquer = new ArrayList<>();
-    protected int m_tailleMaxTerrain = 3 ;
+
 
     public Terrain(Joueur joueur) {
         m_joueurAssocier = joueur;
@@ -71,7 +71,7 @@ public class Terrain {
         if (checkVictoire(adversaire) == true){
             Musique.playMusic("src/Jeu/Sons/VictorySound.WAV");
             try {
-                TimeUnit.SECONDS.sleep(10);
+                TimeUnit.SECONDS.sleep(3);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

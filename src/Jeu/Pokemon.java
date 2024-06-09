@@ -297,9 +297,6 @@ public class Pokemon {
         return m_attaque;
     }
 
-    public void Tuer(Pokemon pokemon){
-        pokemon.m_pointDeVie = 0 ;
-    }
 
     public Pouvoir getPouvoir(){
         return m_pouvoir ;

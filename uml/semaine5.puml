@@ -1,0 +1,367 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam style strictuml
+hide empty members
+
+class JeuPP{
+    + {static} main(args[] : String)
+    }
+
+package Jeu{
+
+    class Musique{
+        + {static} playMusic(filepath : String)
+        + {static} playLoopMusic(filepath : String)
+        + {static} playGameMusic()
+    }
+
+    class JeuPokemon{
+        + LancerJeu()
+        + initTerrain(utilisateur : Utilisateur)
+        + CheckJoueur(tour : Tour, utilisateur : Utilisateur, adversaire : Adversaire)
+        + verifTourAdversaire(tour : Tour, adversaire : Adversaire) : Boolean
+        + verifTourUtiliateur(tour : Tour, utilisateur : Utilisateur) : Boolean
+    }
+
+    class Pokemon{
+        - m_attaque : Integer
+        - m_MaxVie : Integer
+        - m_nom : String
+        - m_nomQuiReste
+        - m_peur : Integer
+        - m_pointDeVie : Integer
+        - m_pouvoir
+        - m_resistance : Integer
+        - m_type
+
+        + <<Create>> Pokemon(nomPokemon : NomPokemon, pouvoir : String[*])
+        + <<Create>> Pokemon(nom : String , pouvoir : Pouvoir, type : Affinite , attaque : Integer , vie : Integer)
+        + attaque(pokemon : Pokemon)
+        + changerAttaque(i : Integer)
+        + changerPeur(i : Integer)
+        + changerResistance(i : Integer)
+        + changerType(type : Affinite)
+        + changerVie(i : Integer)
+        + choixNom(randomNumber : Integer)
+        + choixPouvoir(pouvoir : String[*])
+        + choixType(randomNumber : Integer)
+        + getAttaque() : Integer
+        + gerCartePoke() : String
+        + getMaxVie() : Integer
+        + getNom() : String
+        + getPointDeVie() : Integer
+        + getPouvoir()
+        + getType()
+        + toString() : String
+        + tuer()
+        + utiliserPouvoir(pokemon : Pokemon)
+    }
+
+    package Partie{
+
+        class Affichage{
+        + afficheJeu(tour : Tour, adversaire : Adversaire, utilisateur : Utilisateur) : String
+        + afficheTerrain(terrain : Terrain)
+        + afficheTourAdversaire(tour : tour , adversaire : Adversaire) : String
+        + afficheTourUtilisateur(tour : Tour , utilisateur : Utilisateur) : String
+        + demandeInput(question : String) : String
+        }
+
+        class Defausse{
+            - m_nombrePokemonDansDefausse : Integer
+            - m_pokemonDansLaDefausse : String[*]
+
+            + <<Create>> Defausse()
+            + afficheDefausse() : String
+            + ajoutPokemonDefausse(pokemon : Pokemon)
+            + getNombrePokemonDansDefausse() : Integer
+
+        }
+
+        class GameOver{
+            + <<Create>> GameOver()
+            + printGameOver() : String
+        }
+
+        class Input{
+            + inputChiffre() : Integer
+        }
+
+        class NomPokemon{
+            - m_listeNomPokemon : String[*]
+
+            + choixNomPokemon(i : Integer) : String
+            + getNombrePokemon() : Integer
+        }
+
+        class Terrain{
+            - m_aDejaAttaquer : String[*]
+            - m_defausseJoueur
+            - m_joueurAssocier
+            - m_pokemonSurTerrain : String[*]
+
+            + <<Create>> Terrain(joueur : Joueur)
+            + ajouterPokemonDejaAttaquer(pokemon : Pokemon)
+            + ajoutPokemonSurTerrain(pokemon : Pokemon)
+            + checkDeath(adversaire : Adversaire)
+            + checkDeath(utilisateur : Utilisateur)
+            + checkVictoire(adversaire : Adversaire) : Boolean
+            + getDefausseJoueur()
+            + getNombrePokemonDejaAttaquer() : Integer
+            + getNombrePokemonSurTerrain() : Integer
+            + getPokemonSurLeTerrain(i : Integer)
+            + getPokemonDejaAttaquer(i : Integer)
+            + removePokemonSurTerrain(i : Integer)
+            + viderPokemonQuiAJouer()
+        }
+
+        Terrain o--> "1 \n getPokemonSurLeTerrain \n getPokemonDejaAttaquer"Pokemon
+
+        class Tour{
+            - m_indexTourDuJoueur : Integer
+            - m_joueurDansLaPartie : String[*]
+            - m_nombreDeTour : Integer
+            - m_tourDuJoueur
+
+            + <<Create>> Tour(joueur1 : Joueur , joueur2 : Joueur)
+            + getNombreDeTour() : Integer
+            + getTourDuJoueur()
+            + tourSuivant()
+        }
+
+        class Victoire{
+            + <<Create>> Victoire()
+            + printVictoire() : String
+        }
+
+        package Joueurs{
+            class Adversaire extends Joueur{
+                - m_ordreAttaque
+
+                + <<Create>> Adversaire(pouvoirEnJeu : String[*])
+                + choixOrdrePokemon(terrain : Terrain)
+                + utilisationPouvoir()
+            }
+
+
+            class Joueur{
+                # m_mainPrivee
+                # m_piochePrivee
+                # m_pouvoirEnJeu : String [*]
+                # m_terrainPrivee
+
+                + <<Create>> Joueur(pouvoir : String[*])
+                + ajoutMain()
+                + getMain()
+                + getPiocheJoueur()
+                + getTerrain()
+            }
+
+
+            class Main{
+                - m_nombrePokemonDansLaMain : Integer
+                - m_pokemonDansLaMain : String[*]
+
+                + <<Create>> Main()
+                + afficheMain()
+                + ajouterDansMain(pokemon : Pokemon)
+                + ajouterPokemonSurLeTerrain(terrain : Terrain)
+                + getNombrePokemonDansLaMain() : Integer
+                + getPokemonDansLaMain(i : Integer)
+                + retirerPokemonDansLaMain(i : Integer)
+            }
+            class Pioche{
+                - m_nombrePokemonDansLaPioche : Integer
+                - m_nomPokemonQuiReste
+                - m_pokemonDansLaPioche : String[*]
+                - m_pouvoirQuiReste : String[*]
+
+                + <<Create>> Pioche(pouvoir : String[*])
+                + afficherPioche()
+                + genererPioche()
+                + getNombrePokemonDansLaPioche() : Integer
+                + getPokemonDansLaPioche(i : Integer)
+                + removePokemonDansLaPioche(i : Integer)
+            }
+            Pioche o-> "1 getPokemonDansLaPioche" Pokemon : >
+
+            class Utilisateur extends Joueur{
+                + <<Create>> Utilisateur(pouvoir : String[*])
+                + checkAttackValide(i : Integer, terrain : Terrain) : Boolean
+                + inputPoserPokemon()
+                + inputJouerPouvoir(pokemon : Pokemon , joueur : Joueur)
+                + inputUserChoixQuiAttaque(terrain : Terrain)
+                + inputUserChoixQuiSeFaitAttaquer(terrain : Terrain)
+                + inputUtiliserPouvoir(pokemon : Pokemon, adversaire : Adversaire)
+                + inputUtiliserPouvoir2(pokemon : Pokemon , adversaire : Adversaire)
+            }
+
+            Joueur *-> "1 \n m_mainPrivee" Main : <<Instantiate>>
+
+
+
+        }
+        package Pouvoir{
+            class AffiniteEther extends Pouvoir{
+                - m_type
+
+                + <<Create>> AffiniteEther()
+                + utiliserLePouvoir(pokemon : Pokemon)
+            }
+            class AffinitePlomb extends Pouvoir{
+                - m_type
+
+                + <<Create>> AffinitePlomb()
+                + utiliserLePouvoir(pokemon : Pokemon)
+            }
+            class Berserk extends Pouvoir{
+                + <<Create>> Berserk()
+                + remiseA0()
+                + utiliserLePouvoir(pokemon : Pokemon)
+            }
+            class Fear extends Pouvoir{
+                + <<Create>> Fear()
+                + utiliserLePouvoir(pokemon : Pokemon)
+            }
+            class ListePouvoirs{
+                - m_listePouvoir : String[*]
+                - m_listePouvoirPart1 : String[*]
+                - m_listePouvoirPart2 : String[*]
+
+                + <<Create>> ListePouvoir()
+                + getListePouvoirPart1() : String[*]
+                + getListePouvoirPart2() : String[*]
+                + getNombrePouvoirs() : Integer
+                + getPouvoir(i : Integer)
+            }
+            class Pouvoir <<abstract>>{
+                - m_cible : Integer
+                - m_dejaDistribuer : Boolean
+                - m_dejaUtiliser : Boolean
+                - m_description : String
+                - m_nbTourActif : Integer
+                - m_nbTourActifInitiale : Integer
+                - m_nom : String
+                -m_pokemonAssocier
+                -m_reutilisable : Boolean
+
+                + changerTourActif(i : Integer)
+                + distribuer()
+                + getCible() : Integer
+                + getDejaDistribuer() : Boolean
+                + getDejaUtiliser() : Boolean
+                + getDescription() : String
+                + getNbTourActif() : Integer
+                + getNom() : String
+                + getReutilisable() : Boolean
+                + regenererPouvoir(pokemon : Pokemon)
+                + remiseA0()
+                + reutiliser()
+                + utiliserLePouvoir(pokemon : Pokemon)
+            }
+            class Regeneration extends Pouvoir{
+                + <<Create>> Regeneration()
+                + utiliserLePouvoir(pokemon : Pokemon)
+            }
+            class Resistance extends Pouvoir{
+                + <<Create>> Resistance()
+                + utiliserLePouvoir(pokemon : Pokemon)
+            }
+            class SimpleHeal extends Pouvoir{
+                + <<Create>> SimpleHeal()
+                + utiliserLePouvoir(pokemon : Pokemon)
+            }
+            class TotalHeal extends Pouvoir{
+                + <<Create>> TotalHeal()
+                + utiliserLePouvoir(pokemon : Pokemon)
+            }
+
+                ListePouvoirs .-> AffinitePlomb : <<Instantiate>>
+                ListePouvoirs .-> AffiniteEther : <<Instantiate>>
+                ListePouvoirs .-> Berserk : <<Instantiate>>
+                ListePouvoirs .-> Fear : <<Instantiate>>
+                ListePouvoirs .-> Resistance : <<Instantiate>>
+                ListePouvoirs .-> Regeneration : <<Instantiate>>
+                ListePouvoirs .-> SimpleHeal : <<Instantiate>>
+                ListePouvoirs .-> TotalHeal : <<Instantiate>>
+
+                Pokemon o-> "getPouvoir" Pouvoir : >
+
+
+
+        }
+
+
+
+    Terrain *--> "1 \n m_defausseJoueur" Defausse : belongs to >
+    Terrain o-up-> Joueur : <<use>>
+    Terrain .-> Pokemon : <<use>>
+    Terrain *-> GameOver : <<Instantiate>>
+    Terrain *-> Victoire : <<Instantiate>>
+
+    Tour o-down-> "1.. \n m_tourDuJoueur" Joueur : is part of >
+    Defausse .-> Pokemon : <<use>>
+
+
+    Pioche *-> "20/21 \n m_pokemonDansLaPioche"Pokemon : belongs to >
+    Pioche *--> "1.. \n m_listeNomPokemon"NomPokemon : belongs to >
+
+    Main .> Pokemon : <<use>>
+    Main .> Terrain : <<Call>>
+
+
+
+
+    }
+
+
+    package Element{
+        class Affinite <<abstract>>{
+            # m_avantage : String
+            # m_faiblesse : String
+            # m_nom : String
+            + <<Create>> Affinite(nom : String)
+            + getAvantage() : String
+            + getFaiblesse() : String
+            + getNom() : String
+        }
+        class Air extends Affinite{
+            + <<Create>> Air()
+        }
+        class Eau extends Affinite{
+            + <<Create>> Eau()
+        }
+        class Ether extends Affinite{
+            + <<Create>> Ether()
+            + getAvantage() : String
+            + getFaiblesse() : String
+        }
+        class Feu extends Affinite{
+            + <<Create>> Feu()
+        }
+        class Plomb extends Affinite{
+            + <<Create>> Plomb()
+            + getAvantage() : String
+            + getFaiblesse() : String
+        }
+        class Terre extends Affinite{
+            + <<Create>> Terre()
+        }
+        AffiniteEther *-> "1 \ m_type" Ether : <<Instantiate>>
+        AffinitePlomb *-> "1 \ m_type" Plomb : <<Instantiate>>
+        Pokemon o-> "getAffinite" Affinite : >
+    }
+    JeuPP -> JeuPokemon
+
+    JeuPokemon .-down-> Adversaire : <<Instantiate>>
+    JeuPokemon .-down-> Utilisateur : <<Instantiate>>
+    JeuPokemon .> Tour : <<Instantiate>>
+    JeuPokemon .> Musique : <<use>>
+
+    Pokemon *--> "1 \n m_type" Affinite
+    Pokemon o-> "1 attaque" Pokemon
+    Pokemon o-> "* \n m_nomPokeQuiReste"NomPokemon :  is part of >
+
+}
+@enduml

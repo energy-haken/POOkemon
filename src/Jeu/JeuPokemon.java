@@ -59,15 +59,7 @@ public class JeuPokemon {
 
 
 
-
-        /*
-        boolean verif = terrainAdversaire.checkVictoire(adversaire);
-        if(verif){
-            Musique.stopMusic();
-        }
-
-        terrainAdversaire.checkDeath(adversaire);
-        */
+        
 
         while(true){
             affichage.afficheJeu(tour , adversaire, utilisateur );

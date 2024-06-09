@@ -1,15 +1,6 @@
 package Jeu.Partie.Pouvoirs;
 
-import Jeu.Partie.Affichage;
-import Jeu.Partie.Joueurs.Joueur;
-import Jeu.Partie.Terrain;
 import Jeu.Pokemon;
-import Jeu.Partie.Pouvoirs.* ;
-
-import javax.print.DocFlavor;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 
 public abstract class Pouvoir {
@@ -32,7 +23,7 @@ public abstract class Pouvoir {
         m_dejaUtiliser  = true ;
     }
 
-    public void regenerPouvoir(Pokemon pokemon){
+    public void regenererPouvoir(Pokemon pokemon){
         m_dejaUtiliser  = false ;
         m_nbTourActif = m_nbTourActifInitial ;
     }

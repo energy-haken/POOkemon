@@ -11,9 +11,9 @@ import java.util.Random;
 public class Joueur {
 
     protected ArrayList<Pouvoir> m_pouvoirEnJeu ;
-    private Pioche m_piochePrivee;
-    private Main m_mainPrivee = new Main();
-    private Terrain m_terrainPrivee = new Terrain(this);
+    protected Pioche m_piochePrivee;
+    protected Main m_mainPrivee = new Main();
+    protected Terrain m_terrainPrivee = new Terrain(this);
 
 
     public Joueur(ArrayList pouvoirs){

@@ -2,7 +2,6 @@ package Jeu.Partie.Joueurs;
 
 import Jeu.Partie.Affichage;
 import Jeu.Partie.Input;
-import Jeu.Partie.Pouvoirs.ListePouvoirs;
 import Jeu.Partie.Terrain;
 import Jeu.Pokemon;
 
@@ -227,14 +226,14 @@ public class Utilisateur extends Joueur {
 
     public void inputUtiliserPouvoir2(Pokemon pokemon , Adversaire adversaire){
         if(pokemon.getPouvoir().getCible() == 0){
-            inputJoueurPouvoir(pokemon, this);
+            inputJouerPouvoir(pokemon, this);
         }
         else{
-            inputJoueurPouvoir(pokemon, adversaire);
+            inputJouerPouvoir(pokemon, adversaire);
         }
     }
 
-    public void inputJoueurPouvoir(Pokemon pokemon ,Joueur joueur){
+    public void inputJouerPouvoir(Pokemon pokemon , Joueur joueur){
         String chaine = "" ;
         while(true) {
             for (int a = 0; a < joueur.getTerrain().getNombrePokemonSurTerrain(); a++) {

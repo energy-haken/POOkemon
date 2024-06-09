@@ -20,13 +20,20 @@ public class Tour {
         switch(randomTour){
             case 0:
                 m_tourDuJoueur = joueur1;
+                joueur1.getPiocheJoueur().removePokemonDansLaPioche(0);
                 break ;
             case 1:
                 m_tourDuJoueur = joueur2;
+                joueur2.getPiocheJoueur().removePokemonDansLaPioche(0);
                 break ;
         }
         m_joueurDansLaPartie.add(joueur1) ;
         m_joueurDansLaPartie.add(joueur2) ;
+
+
+
+
+
     }
 
 
@@ -46,7 +53,7 @@ public class Tour {
                 }
 
                 if(pouvoirDuPoke.getReutisable() && pouvoirDuPoke.getNbTourActif() <= 0){
-                    pouvoirDuPoke.regenerPouvoir(m_tourDuJoueur.getTerrain().getPokemonSurTerrain(i));
+                    pouvoirDuPoke.regenererPouvoir(m_tourDuJoueur.getTerrain().getPokemonSurTerrain(i));
                 }
 
 

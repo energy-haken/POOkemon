@@ -4,7 +4,7 @@ import Jeu.Pokemon;
 
 public class Resistance extends Pouvoir{
     public Resistance(){
-        m_nom = "Affinite Ether"; ;
+        m_nom = "Resistance"; ;
         m_dejaDistribuer = false ;
         m_dejaUtiliser = false ;
         m_reutisable = false ;

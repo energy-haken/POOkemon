@@ -55,10 +55,7 @@ private static boolean m_playingMusic = false ;
         }
     }
 
-    public static boolean stopMusic(){
-        m_playingMusic = false ;
-        return m_playingMusic ;
-        }
+
 
     public static void playGameMusic(){
         Random r = new Random();

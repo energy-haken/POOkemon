@@ -17,28 +17,40 @@ public class Adversaire extends Joueur {
     }
 
     public Pokemon choixOrdrePokemon(Terrain terrain) {
+        // Parcourir les Pokémon sur le terrain adverse
         for (int i = 0; i < terrain.getNombrePokemonSurTerrain(); i++) {
-            for (int j = 0; j < this.getTerrain().getNombrePokemonSurTerrain(); j++) {
-                if (terrain.getPokemonSurTerrain(i).getType().getNom() == this.getTerrain().getPokemonSurTerrain(0).getType().getAvantage()){
-                    m_ordreAttaque = terrain.getPokemonSurTerrain(i);
-                    return m_ordreAttaque;
+            Pokemon adversaire = terrain.getPokemonSurTerrain(i);
 
-                }
-                else {
-                    if (terrain.getPokemonSurTerrain(i).getPointDeVie() < this.getTerrain().getPokemonSurTerrain(0).getPointDeVie()) {
-                        m_ordreAttaque = terrain.getPokemonSurTerrain(i);
-                        return m_ordreAttaque;
-                    }
-                    else {
-                        Random rand = new Random();
-                        int index = rand.nextInt(this.getTerrain().getNombrePokemonSurTerrain());
-                        m_ordreAttaque = terrain.getPokemonSurTerrain(index);
-                    }
-                }
+            // Comparer le type du Pokémon adverse avec l'avantage du type de votre premier Pokémon
+            if (adversaire.getType().getNom().equals(this.getTerrain().getPokemonSurTerrain(0).getType().getAvantage())) {
+                m_ordreAttaque = adversaire;
+                return m_ordreAttaque;
             }
         }
+
+        // Si aucun Pokémon n'a un type avec avantage, trouver le Pokémon avec le moins de points de vie
+        Pokemon moinsPointsDeVie = null;
+        for (int i = 0; i < terrain.getNombrePokemonSurTerrain(); i++) {
+            Pokemon adversaire = terrain.getPokemonSurTerrain(i);
+            if (moinsPointsDeVie == null || adversaire.getPointDeVie() < moinsPointsDeVie.getPointDeVie()) {
+                moinsPointsDeVie = adversaire;
+            }
+        }
+
+        // Si un Pokémon avec moins de points de vie est trouvé, le choisir
+        if (moinsPointsDeVie != null && moinsPointsDeVie.getPointDeVie() < this.getTerrain().getPokemonSurTerrain(0).getPointDeVie()) {
+            m_ordreAttaque = moinsPointsDeVie;
+            return m_ordreAttaque;
+        }
+
+        // Sinon, choisir un Pokémon aléatoirement
+        Random rand = new Random();
+        int index = rand.nextInt(terrain.getNombrePokemonSurTerrain());
+        m_ordreAttaque = terrain.getPokemonSurTerrain(index);
+
         return m_ordreAttaque;
     }
+
 
     public void utilisationPouvoir(Terrain terrain) {
         for (int i = 0; i < this.getTerrain().getNombrePokemonSurTerrain(); i++) {
