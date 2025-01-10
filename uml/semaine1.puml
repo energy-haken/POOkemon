@@ -1,0 +1,314 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam classFontStyle Bold
+skinparam style strictuml
+hide empty members
+left to right direction
+
+
+
+package Jeu
+{
+    package Partie
+    {
+
+
+
+        package Joueurs
+        {
+            class Joueur
+            {
+                - m_piochePrive : Pioche
+                - m_mainPrive : Main
+                - m_defaussePrive : Defausse
+
+                + piocherUneCarte() : Pokemon
+            }
+
+            class Adversaire
+            {
+                - m_ordreAttaque : Pokemon
+
+                + choixAttaque()
+                + changerOrdreAttaque(pokemon : Pokemon)
+            }
+
+            class Utilisateur{}
+
+            class Main
+            {
+                - m_pokemonDansMain : ArrayList<Pokemon>
+
+                + getPokemonMain() : ArrayList<Pokemon>
+                + ajouterCarteSurTerrain(pokemon : Pokemon)
+            }
+            class Pioche
+            {
+                - m_pokemonDansPioche : ArrayList<Pokemon>
+
+                + <<Create>> Pioche()
+                + rajouteCarteMain(main : Main) : Pokemon
+                + getPioche() : ArrayList<Pokemon>
+            }
+
+            class Defausse
+            {
+                - m_pokemonMort : ArrayList<>
+
+                + ajouterDefausse(pokemon : Pokemon)
+                + getDefausse() : ArrayList<>
+            }
+        }
+
+        Joueur "1" *--> "m_mainPrive" Main
+        Main "1" o-----> "5 \t Recupere 5 Pokemons de la pioche"Pioche
+
+        Joueur "*" o--> Terrain
+        Joueur "1" *->  "1 m_piochePrive "Pioche
+        Joueur "1" *-> "1 m_defaussePrive" Defausse
+        Utilisateur -left-|> Joueur
+        Adversaire -right-|> Joueur
+
+        class Terrain
+        {
+            - m_pokemonSurLeTerrain : ArrayList<>
+            - m_pokemonMaxSurTerrain : Integer
+
+            + <<Create>> Terrain()
+            + jouerCarte(pokemonAdversaire : Pokemon)
+            + printTerrain() : String
+            + getPokemonTerrain() : ArrayList<>
+        }
+
+        class Tour
+        {
+            - m_joueurQuiJoue : Joueur
+            - m_ordreJoueur : Joueur
+
+            + getJoueurQuiJoue() : Joueur
+        }
+    }
+
+    Pioche "2"*----> "20/21 \n m_pokemonDansPioche" Pokemon
+    Terrain "1" o-up-> "m_pokemonMaxSurTerrain \n  m_pokemonSurLeTerrain" Main
+    Main o--> "ajouterCarteSurTerrain" Terrain
+    Defausse "2 (1 defausse par joueur)" o--> "* \n m_pokemonMort" Terrain
+    Tour o-down-> Joueur
+
+    class Pokemon
+    {
+        - m_type : Affinite
+        - m_nom : NomPokemon
+        - m_pointDeVie : Integer
+        - m_attaque : Integer
+
+        + choixType(randomNumber : Integer)
+        + attaque(pokemon : Pokemon)
+        + getNom() : String
+        + getType() : Affinite
+        + getPV() : Integer
+        + getAttaque() : Integer
+        + getCartePoke() : String
+        + toString() : String
+
+    }
+
+    package Element
+    {
+        class Affinite
+        {
+            # m_nom : String
+            # m_avantage : String
+            # m_faiblesse : String
+
+            + getAvantage() : String
+            + getFaiblesse() : String
+            + getNom() : String
+        }
+        class Air{
+        + <<Create>> Air()
+        }
+        class Eau{
+        + <<Create>> Eau()
+        }
+        class Feu{
+        + <<Create>> Feu()
+        }
+        class Terre{
+        + <<Create>> Terre()
+        }
+    }
+
+    Air -up-|> Affinite
+    Feu -up-|> Affinite
+    Terre -up-|> Affinite
+    Eau -up-|> Affinite
+
+
+    Pokemon "*" o-> "1 \n m_affinite" Affinite
+    Pokemon o-left> "1 \n m_nom" NomPokemon
+    Pokemon "1" o-> "1 \t attaque()" Pokemon
+
+
+
+enum NomPokemon{
+Bulbizarre
+Herbizarre
+Florizarre
+Salamèche
+Reptincel
+Dracaufeu
+Carapuce
+Carabaffe
+Tortank
+Chenipan
+Chrysacier
+Papilusion
+Aspicot
+Coconfort
+Dardargnan
+Roucool
+Roucoups
+Roucarnage
+Rattata
+Rattatac
+Piafabec
+Rapasdepic
+Abo
+Arbok
+Pikachu
+Raichu
+Sabelette
+Sablaireau
+Nidoran
+Nidorina
+Nidoqueen
+Nidorino
+Nidoking
+Mélofée
+Mélodelfe
+Goupix
+Feunard
+Rondoudou
+Grodoudou
+Nosferapti
+Nosferalto
+Mystherbe
+Ortide
+Rafflesia
+Paras
+Parasect
+Mimitoss
+Aéromite
+Taupiqueur
+Triopikeur
+Miaouss
+Persian
+Psykokwak
+Akwakwak
+Férosinge
+Colossinge
+Caninos
+Arcanin
+Ptitard
+Têtarte
+Tartard
+Abra
+Kadabra
+Alakazam
+Machoc
+Machopeur
+Mackogneur
+Chétiflor
+Boustiflor
+Empiflor
+Tentacool
+Tentacruel
+Racaillou
+Gravalanch
+Grolem
+Ponyta
+Galopa
+Ramoloss
+Flagadoss
+Magnéti
+Magnéton
+Canarticho
+Doduo
+Dodrio
+Otaria
+Lamantine
+Tadmorv
+Grotadmorv
+Kokiyas
+Crustabri
+Fantominus
+Spectrum
+Ectoplasma
+Onix
+Soporifik
+Hypnomade
+Krabby
+Krabboss
+Voltorbe
+Electrode
+Noeunoeuf
+Noadkoko
+Osselait
+Ossatueur
+Kicklee
+Tygnon
+Excelangue
+Smogo
+Smogogo
+Rhinocorne
+Rhinoféros
+Leveinard
+Saquedeneu
+Kangourex
+Hypotrempe
+Hypocéan
+Poissirène
+Poissoroy
+Stari
+Staross
+M. Mime
+Insécateur
+Lippoutou
+Elektek
+Magmar
+Scarabrute
+Tauros
+Magicarpe
+Léviator
+Lokhlass
+Métamorph
+Evoli
+Aquali
+Voltali
+Pyroli
+Porygon
+Amonita
+Amonistar
+Kabuto
+Kabutops
+Ptéra
+Ronflex
+Artikodin
+Electhor
+Sulfura
+Minidraco
+Draco
+Dracoloss
+Mewtwo
+Mew
+}
+
+
+
+
+
+}
+
+
+@enduml
